@@ -75,7 +75,7 @@ class _HomeState extends State<Home> {
       'ซั น นี่ ไ พ แ ล็ บ',
       style: TextStyle(
           fontSize: myH1,
-          color: Colors.white,
+          color: Colors.brown[700],
           fontWeight: FontWeight.bold,
           fontFamily: 'Kanit-Regular'),
     );

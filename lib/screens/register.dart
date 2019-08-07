@@ -7,6 +7,8 @@ class Register extends StatefulWidget {
 
 class _RegisterState extends State<Register> {
   // Explicit
+  final formKey = GlobalKey<FormState>();
+  String nameString, emailString, passwordString;
 
   // Method
   Widget nameText() {
@@ -23,6 +25,14 @@ class _RegisterState extends State<Register> {
         helperStyle: TextStyle(color: Colors.yellow[700]),
         hintText: 'English only',
       ),
+      validator: (String value) {
+        if (value.isEmpty) {
+          return 'Please fill name in blank';
+        }
+      },
+      onSaved: (String value) {
+        nameString = value;
+      },
     );
   }
 
@@ -41,6 +51,14 @@ class _RegisterState extends State<Register> {
         helperStyle: TextStyle(color: Colors.yellow[700]),
         hintText: 'you@emai.com',
       ),
+      validator: (String value) {
+        if (!((value.contains('@')) && (value.contains('.')))) {
+          return 'Please keep format email';
+        }
+      },
+      onSaved: (String value) {
+        emailString = value;
+      },
     );
   }
 
@@ -58,18 +76,29 @@ class _RegisterState extends State<Register> {
         helperStyle: TextStyle(color: Colors.yellow[700]),
         hintText: 'More 6 characters',
       ),
+      validator: (String value) {
+        if (value.length < 6) {
+          return 'Password more 6 characters';
+        }
+      },
+      onSaved: (String value) {
+        passwordString = value;
+      },
     );
   }
 
   Widget groupText() {
-    return ListView(
-      padding:
-          EdgeInsets.only(top: 16.0, bottom: 16.0, right: 16.0, left: 16.0),
-      children: <Widget>[
-        nameText(),
-        emailText(),
-        passwordText(),
-      ],
+    return Form(
+      key: formKey,
+      child: ListView(
+        padding:
+            EdgeInsets.only(top: 16.0, bottom: 16.0, right: 16.0, left: 16.0),
+        children: <Widget>[
+          nameText(),
+          emailText(),
+          passwordText(),
+        ],
+      ),
     );
   }
 
@@ -77,7 +106,13 @@ class _RegisterState extends State<Register> {
     return IconButton(
       tooltip: 'Register Firebase',
       icon: Icon(Icons.cloud_upload),
-      onPressed: () {},
+      onPressed: () {
+        if (formKey.currentState.validate()) {
+          formKey.currentState.save();
+          print(
+              'name = $passwordString, email = $emailString, password = $passwordString');
+        }
+      },
     );
   }
 
@@ -86,7 +121,7 @@ class _RegisterState extends State<Register> {
     return Scaffold(
       appBar: AppBar(
         actions: <Widget>[registerButton()],
-        // backgroundColor: Color.fromARGB(a, r, g, b),
+        backgroundColor: Color.fromARGB(255, 109, 76, 65),
         title: Text('Register'),
       ),
       body: groupText(),

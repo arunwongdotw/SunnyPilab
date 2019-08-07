@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "536071697971",
+    "firebase_url": "https://sunnypilab.firebaseio.com",
+    "project_id": "sunnypilab",
+    "storage_bucket": "sunnypilab.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:536071697971:android:a0714095bfaa6770",
+        "android_client_info": {
+          "package_name": "com.andriondstudio.sunny_pilab"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "536071697971-dovbd8m85k7i4chls2c4nv29po5rlo0u.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBMwqgRTmgYsKKDTFFthyfI1wxm_rAk24M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "536071697971-dovbd8m85k7i4chls2c4nv29po5rlo0u.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
