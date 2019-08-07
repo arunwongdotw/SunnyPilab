@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:sunny_pilab/screens/authen.dart';
+import 'package:sunny_pilab/screens/register.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -25,7 +27,12 @@ class _HomeState extends State<Home> {
           'Sign Up',
           style: TextStyle(color: myColor),
         ),
-        onPressed: () {},
+        onPressed: () {
+          print('click sign in button');
+          var registerRoute =
+              MaterialPageRoute(builder: (BuildContext context) => Register());
+          Navigator.of(context).push(registerRoute);
+        },
       ),
     );
   }
@@ -42,7 +49,12 @@ class _HomeState extends State<Home> {
           'Sign In',
           style: TextStyle(color: Colors.white),
         ),
-        onPressed: () {},
+        onPressed: () {
+          print('click sign in button');
+          var authenRoute =
+              MaterialPageRoute(builder: (BuildContext context) => Authen());
+          Navigator.of(context).push(authenRoute);
+        },
       ),
     );
   }
