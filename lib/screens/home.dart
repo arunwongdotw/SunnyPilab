@@ -9,8 +9,44 @@ class _HomeState extends State<Home> {
   // Explicit
   double myWidth = 120.0;
   double myH1 = 30.0;
+  Color myColor = Colors.brown[400];
 
   // Method
+
+  Widget signUpButton() {
+    return Container(
+      width: 220.0,
+      child: OutlineButton(
+        borderSide: BorderSide(color: myColor),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(5.0),
+        ),
+        child: Text(
+          'Sign Up',
+          style: TextStyle(color: myColor),
+        ),
+        onPressed: () {},
+      ),
+    );
+  }
+
+  Widget signInButton() {
+    return Container(
+      width: 220.0,
+      child: RaisedButton(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(5.0),
+        ),
+        color: myColor,
+        child: Text(
+          'Sign In',
+          style: TextStyle(color: Colors.white),
+        ),
+        onPressed: () {},
+      ),
+    );
+  }
+
   Widget showLogo() {
     return Container(
       alignment: Alignment.center,
@@ -24,10 +60,10 @@ class _HomeState extends State<Home> {
 
   Widget showAppName() {
     return Text(
-      'ซันนี่ไพแล็บ',
+      'ซั น นี่ ไ พ แ ล็ บ',
       style: TextStyle(
           fontSize: myH1,
-          color: Colors.pink[700],
+          color: Colors.brown[700],
           fontWeight: FontWeight.bold,
           fontFamily: 'Kanit-Regular'),
     );
@@ -36,12 +72,22 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          showLogo(),
-          showAppName(),
-        ],
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: RadialGradient(
+            colors: [Colors.white, Colors.brown],
+            radius: 1.0,
+          ),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            showLogo(),
+            showAppName(),
+            signInButton(),
+            signUpButton(),
+          ],
+        ),
       ),
     );
   }
