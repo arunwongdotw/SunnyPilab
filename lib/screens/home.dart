@@ -1,5 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:sunny_pilab/screens/authen.dart';
+import 'package:sunny_pilab/screens/my_service.dart';
 import 'package:sunny_pilab/screens/register.dart';
 
 class Home extends StatefulWidget {
@@ -11,21 +13,42 @@ class _HomeState extends State<Home> {
   // Explicit
   double myWidth = 120.0;
   double myH1 = 30.0;
-  Color myColor = Colors.brown[400];
+  Color primaryColor = Color.fromARGB(255, 251, 192, 45);
+  Color lightColor = Color.fromARGB(255, 255, 242, 99);
+  Color darkColor = Color.fromARGB(255, 196, 144, 0);
 
   // Method
+  @override // เริ่มก่อนใครในหน้านี้
+  void initState() {
+    super.initState();
+    checkStatus();
+  }
+
+  Future<void> checkStatus() async {
+    FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+    FirebaseUser firebaseUser = await firebaseAuth.currentUser();
+    if (firebaseUser != null) {
+      var serviceRoute =
+          MaterialPageRoute(builder: (BuildContext context) => MyService());
+      Navigator.of(context)
+          .pushAndRemoveUntil(serviceRoute, (Route<dynamic> route) => false);
+    }
+  }
 
   Widget signUpButton() {
     return Container(
       width: 220.0,
       child: OutlineButton(
-        borderSide: BorderSide(color: myColor),
+        borderSide: BorderSide(
+          color: primaryColor,
+          width: 2.0,
+        ),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(5.0),
         ),
         child: Text(
           'Sign Up',
-          style: TextStyle(color: myColor),
+          style: TextStyle(color: Colors.black),
         ),
         onPressed: () {
           print('click sign in button');
@@ -44,10 +67,10 @@ class _HomeState extends State<Home> {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(5.0),
         ),
-        color: myColor,
+        color: primaryColor,
         child: Text(
           'Sign In',
-          style: TextStyle(color: Colors.white),
+          style: TextStyle(color: Colors.black),
         ),
         onPressed: () {
           print('click sign in button');
@@ -65,19 +88,20 @@ class _HomeState extends State<Home> {
       child: Container(
         width: myWidth,
         height: myWidth,
-        child: Image.asset('images/deer.png'),
+        child: Image.asset('images/logo.png'),
       ),
     );
   }
 
   Widget showAppName() {
     return Text(
-      'ซั น นี่ ไ พ แ ล็ บ',
+      'ไ ก่ เ เ อ ป',
       style: TextStyle(
-          fontSize: myH1,
-          color: Colors.brown[700],
-          fontWeight: FontWeight.bold,
-          fontFamily: 'Kanit-Regular'),
+        fontSize: myH1,
+        color: Colors.black,
+        fontWeight: FontWeight.bold,
+        fontFamily: 'Kanit-Regular',
+      ),
     );
   }
 
@@ -87,8 +111,8 @@ class _HomeState extends State<Home> {
       body: Container(
         decoration: BoxDecoration(
           gradient: RadialGradient(
-            colors: [Colors.white, Colors.brown],
-            radius: 1.0,
+            colors: [lightColor, darkColor],
+            radius: 1.5,
           ),
         ),
         child: Column(

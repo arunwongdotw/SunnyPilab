@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:sunny_pilab/screens/my_service.dart';
 
 class Register extends StatefulWidget {
   @override
@@ -9,6 +11,7 @@ class _RegisterState extends State<Register> {
   // Explicit
   final formKey = GlobalKey<FormState>();
   String nameString, emailString, passwordString;
+  FirebaseAuth firebaseAuth = FirebaseAuth.instance;
 
   // Method
   Widget nameText() {
@@ -111,7 +114,55 @@ class _RegisterState extends State<Register> {
           formKey.currentState.save();
           print(
               'name = $passwordString, email = $emailString, password = $passwordString');
+          uploadValueToFirebase();
         }
+      },
+    );
+  }
+
+  Future<void> uploadValueToFirebase() async {
+    await firebaseAuth
+        .createUserWithEmailAndPassword(
+            email: emailString, password: passwordString)
+        .then((response) {
+      print('Register success');
+      setUpDisplayName();
+    }).catchError((response) {
+      print('response = ${response.toString()}');
+      String title = response.code;
+      String message = response.message;
+      myAlert(title, message);
+    });
+  }
+
+  Future<void> setUpDisplayName() async {
+    await firebaseAuth.currentUser().then((response) {
+      UserUpdateInfo userUpdateInfo = UserUpdateInfo();
+      userUpdateInfo.displayName = nameString;
+      response.updateProfile(userUpdateInfo);
+      var myServiceRoute =
+          MaterialPageRoute(builder: (BuildContext context) => MyService());
+      Navigator.of(context)
+          .pushAndRemoveUntil(myServiceRoute, (Route<dynamic> route) => false);
+    });
+  }
+
+  void myAlert(String title, String message) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(title),
+          content: Text(message),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('OK'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            )
+          ],
+        );
       },
     );
   }
